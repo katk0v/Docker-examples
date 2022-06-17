@@ -25,19 +25,17 @@ namespace WebAppDocker.Controllers
         [HttpPost("/api/post")]
         public async  Task<string> Post()
         {
-            var responseBody = "nothing";
-            // Call asynchronous network methods in a try/catch block to handle exceptions.
+            var responseBody = "empty result";
+            
             try	
             {
                 //HttpResponseMessage response = await Client.GetAsync("http://127.0.0.1:8080/");
                 HttpResponseMessage response = await Client.GetAsync(_pythonContainer);
                 
-                _logger.LogInformation("connect to {PythonContainer}", _pythonContainer);
+                _logger.LogInformation("try connect to {PythonContainer}", _pythonContainer);
                 
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadAsStringAsync();
-                // Above three lines can be replaced with new helper method below
-                // string responseBody = await client.GetStringAsync(uri);
 
                 Console.WriteLine(responseBody);
             }
